@@ -25,12 +25,20 @@ class CardContainer extends React.Component<Props, State> {
             <div className="card-container">
                 {this.state.board.map((row, i) =>
                     row.map((ele, j) =>
-                        <Card key={3 * i + j} value={ele} onClick={() => {
-                            if (this.state.board[i][j] !== '') return;
-                            const board = this.state.board;
-                            board[i][j] = this.state.turn ? 'X' : 'O';
-                            this.setState({ board, turn: !this.state.turn });
-                        }} />
+                        <Card
+                            key={3 * i + j}
+                            value={ele}
+                            row={i}
+                            col={j}
+                            onClick={() => {
+                                if (this.state.board[i][j] !== '') return;
+                                const board = this.state.board;
+                                board[i][j] = this.state.turn ? 'X' : 'O';
+                                if (this.props.onPlayerChange) {
+                                    this.props.onPlayerChange(!this.state.turn);
+                                }
+                                this.setState({ board, turn: !this.state.turn });
+                            }} />
                     )
                 )}
             </div>

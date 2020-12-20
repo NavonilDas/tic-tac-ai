@@ -21,7 +21,7 @@ code {
 
 .card {
   display: flex;
-  border: 8px solid #1a1b16;
+  border: 8px solid #2a2a28;
   border-radius: var(--boder-radius);
   width: var(--card-size);
   height: var(--card-size);
@@ -37,6 +37,36 @@ code {
 .card.O {
   color: #40a0ff;
 }
+
+.card.top{
+  border-top-left-radius: 0;
+}
+.card.right{
+  border-top-right-radius: 0;
+}
+.card.left{
+  border-bottom-left-radius: 0;
+}
+.card.bottom{
+  border-bottom-right-radius: 0;
+}
+/* Borders */
+.card.b-top{
+  margin-top: -8px;
+}
+
+.card.b-right{
+  margin-right: -8px;
+}
+
+.card.b-bottom{
+  margin-bottom: -8px;
+}
+
+.card.b-left{
+  margin-left: -8px;
+}
+
 
 .card > span {
   margin: auto;

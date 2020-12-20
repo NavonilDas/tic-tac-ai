@@ -21,7 +21,7 @@ code {
 
 .card {
   display: flex;
-  border: 8px solid #000;
+  border: 8px solid #1a1b16;
   border-radius: var(--boder-radius);
   width: var(--card-size);
   height: var(--card-size);
@@ -31,11 +31,11 @@ code {
 }
 
 .card.X {
-  color: red;
+  color: #ff3333;
 }
 
 .card.O {
-  color: blue;
+  color: #40a0ff;
 }
 
 .card > span {

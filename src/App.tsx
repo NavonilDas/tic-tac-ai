@@ -12,6 +12,8 @@ class App extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+    this.state = {
+    };
   }
 
 
@@ -19,10 +21,14 @@ class App extends React.Component<Props, State> {
     return (
       <div>
 
-        <div className="">
-          <CardContainer />
+        <div style={{ display: 'flex' }}>
+          <CardContainer
+            onGameWin={(player) => console.log(player + ' Wins')}
+            onGameDraw={() => console.log('Draw')}
+            onPlayerChange={(player) => console.log((player) ? 'X Plays' : 'O Plays')}
+          />
         </div>
-        
+
       </div>
     );
   }

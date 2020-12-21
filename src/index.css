@@ -38,35 +38,34 @@ code {
   color: #40a0ff;
 }
 
-.card.top{
+.card.top {
   border-top-left-radius: 0;
 }
-.card.right{
+.card.right {
   border-top-right-radius: 0;
 }
-.card.left{
+.card.left {
   border-bottom-left-radius: 0;
 }
-.card.bottom{
+.card.bottom {
   border-bottom-right-radius: 0;
 }
 /* Borders */
-.card.b-top{
+.card.b-top {
   margin-top: -8px;
 }
 
-.card.b-right{
+.card.b-right {
   margin-right: -8px;
 }
 
-.card.b-bottom{
+.card.b-bottom {
   margin-bottom: -8px;
 }
 
-.card.b-left{
+.card.b-left {
   margin-left: -8px;
 }
-
 
 .card > span {
   margin: auto;
@@ -76,4 +75,5 @@ code {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   width: calc(var(--card-size) * 3);
+  margin: 0 auto 0 auto;
 }

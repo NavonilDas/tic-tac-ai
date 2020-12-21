@@ -1,13 +1,18 @@
 import React from 'react';
 import Card from './Card';
+import { Logic } from './Logic';
 
 interface Props {
     onPlayerChange?: (player: boolean) => void;
+    onGameWin?: (player: 'X' | 'O') => void;
+    onGameDraw?: () => void;
 };
 
 interface State {
     board: ('X' | 'O' | '')[][];
-    turn: boolean; // True for X   
+    turn: boolean; // True for X
+    fills: number;
+    isWin: boolean;
 };
 
 class CardContainer extends React.Component<Props, State> {
@@ -16,8 +21,16 @@ class CardContainer extends React.Component<Props, State> {
         super(props);
         this.state = {
             board: [['', '', ''], ['', '', ''], ['', '', '']],
-            turn: true
+            turn: true,
+            fills: 0,
+            isWin: false
         };
+    }
+
+    componentDidMount() {
+        if (this.props.onPlayerChange) {
+            this.props.onPlayerChange(this.state.turn);
+        }
     }
 
     render() {
@@ -31,13 +44,43 @@ class CardContainer extends React.Component<Props, State> {
                             row={i}
                             col={j}
                             onClick={() => {
-                                if (this.state.board[i][j] !== '') return;
+                                // if state is not empty , Board is Filled or Game Ends with win
+                                if (
+                                    this.state.board[i][j] !== '' ||
+                                    this.state.fills === 9 ||
+                                    this.state.isWin
+                                ) return;
+
                                 const board = this.state.board;
                                 board[i][j] = this.state.turn ? 'X' : 'O';
-                                if (this.props.onPlayerChange) {
-                                    this.props.onPlayerChange(!this.state.turn);
+
+                                // Check Win
+                                const win = Logic.checkWin(board);
+                                if (win !== '') {
+                                    // if Win Call Event
+                                    if (this.props.onGameWin) {
+                                        this.props.onGameWin(win);
+                                    }
+                                } else {
+                                    if (this.props.onPlayerChange) {
+                                        this.props.onPlayerChange(!this.state.turn);
+                                    }
                                 }
-                                this.setState({ board, turn: !this.state.turn });
+
+                                const fills = this.state.fills + 1;
+                                if (win === '' && fills === 9) {
+                                    // Call Draw Event
+                                    if (this.props.onGameDraw) {
+                                        this.props.onGameDraw();
+                                    }
+                                }
+
+                                this.setState({
+                                    board,
+                                    turn: !this.state.turn,
+                                    fills,
+                                    isWin: (win !== '')
+                                });
                             }} />
                     )
                 )}

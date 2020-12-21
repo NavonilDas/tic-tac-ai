@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from './Card';
-import { Logic } from './Logic';
+import { Logic, Position } from './Logic';
 
 interface Props {
     onPlayerChange?: (player: boolean) => void;
@@ -53,6 +53,26 @@ class CardContainer extends React.Component<Props, State> {
 
                                 const board = this.state.board;
                                 board[i][j] = this.state.turn ? 'X' : 'O';
+
+
+                                new Promise((res: (ans: Position) => void, rej) => {
+                                    const test = JSON.parse(JSON.stringify(board));
+                                    const move = Logic.generateMoves(test, !this.state.turn);
+                                    if (move !== null) {
+                                        res(move);
+                                    } else {
+                                        console.log('N')
+                                    }
+                                }).then((res: Position) => {
+                                    board[res.i][res.j] = 'O';
+                                    this.setState({
+                                        board,
+                                        turn: true
+                                    });
+                                    if (this.props.onPlayerChange) {
+                                        this.props.onPlayerChange(true);
+                                    }
+                                });
 
                                 // Check Win
                                 const win = Logic.checkWin(board);

@@ -1,3 +1,8 @@
+export interface Position {
+    i: number;
+    j: number;
+};
+
 export class Logic {
     /**
      * Check if Someone Wins
@@ -27,5 +32,108 @@ export class Logic {
 
         return '';
     }
-    
+
+    static generateMoves(board: ('X' | 'O' | '')[][], turn: boolean): Position | null {
+        let ans: Position | null = null;
+        let bestScore = -Infinity;
+
+        for (let i = 0; i < 3; ++i) {
+            for (let j = 0; j < 3; ++j) {
+                if (board[i][j] === '') {
+                    board[i][j] = 'O';
+                    const score = Logic.minimax(board, true);
+                    board[i][j] = '';
+                    if (score > bestScore) {
+                        bestScore = score;
+                        console.log(score);
+                        ans = { i, j };
+                    }
+                }
+            }
+        }
+        console.log(bestScore, ans);
+        return ans;
+    }
+
+    static Scores = {
+        X: -1,
+        O: 1,
+    };
+
+    static minimax(board: ('X' | 'O' | '')[][], turn: boolean, depth: number = 32) {
+        // if turn is true it means Human is Playing and we have to minimize ans
+
+        if (depth === 0) {
+            return 0;
+        }
+
+        const res = Logic.checkWin(board);
+        if (res !== '') {
+            if (Logic.Scores[res] === 1) {
+                // console.table(board);
+                //     // console.log(res,board);
+            }
+            return Logic.Scores[res];
+        }
+
+        let ans: number | null = null;
+
+        if (turn) {
+            // minimize ans
+            ans = Infinity;
+            for (let i = 0; i < 3; ++i) {
+                for (let j = 0; j < 3; ++j) {
+
+                    if (board[i][j] === '') {
+                        board[i][j] = 'X';
+                        const score = Logic.minimax(board, false, depth - 1);
+                        board[i][j] = '';
+                        ans = Math.min(ans, score);
+                    }
+
+
+                }
+            }
+        } else {
+            // maximize ans
+            ans = -Infinity;
+            for (let i = 0; i < 3; ++i) {
+                for (let j = 0; j < 3; ++j) {
+
+                    if (board[i][j] === '') {
+                        board[i][j] = 'O';
+                        const score = Logic.minimax(board, true, depth - 1);
+                        board[i][j] = '';
+                        ans = Math.max(ans, score);
+                    }
+
+
+                }
+            }
+
+        }
+
+        // for (let i = 0; i < 3; ++i) {
+        //     for (let j = 0; j < 3; ++j) {
+
+
+        //         if (board[i][j] === '') {
+        //             board[i][j] = turn ? 'X' : 'O';
+        //             const score = Logic.minimax(board, !turn, depth - 1);
+        //             board[i][j] = '';
+
+        //             if (turn) {
+        //                 ans = Math.min(ans, score);
+        //             } else ans = Math.max(ans, score);
+
+        //         }
+
+        //     }
+        // }
+
+        if (ans !== -Infinity || ans !== Infinity)
+            return ans;
+
+        return 0;
+    }
 };

@@ -7,6 +7,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 
 code {
@@ -21,7 +22,7 @@ code {
 
 .card {
   display: flex;
-  border: 8px solid #2a2a28;
+  border: 8px solid #525252;
   border-radius: var(--boder-radius);
   width: var(--card-size);
   height: var(--card-size);
@@ -75,5 +76,65 @@ code {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   width: calc(var(--card-size) * 3);
+  height: calc(var(--card-size) * 3);
+  margin: auto;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
+.trans-container {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 100;
+}
+
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  z-index: 101;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 1rem;
+  border-radius: 8px;
+  outline: none;
+  min-width: 150px;
+  font-weight: bold;
+}
+
+.play-btn > button {
+  background-color: #0394fc;
+  color: #fff;
+}
+
+.play-btn > div,
+.status {
+  margin: 16px 0 16px 0;
+  font-family: "evilempire";
+  color: #ff3b3b;
+  font-size: 2em;
+  text-align: center;
+}
+.bottomBar {
+  display: flex;
+  margin-bottom: 10px;
+}
+.bottomBar > button {
   margin: 0 auto 0 auto;
+  background: #06d64c;
+  color: #fff;
 }
